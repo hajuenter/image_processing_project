@@ -1,10 +1,12 @@
 import tkinter as tk
-from tkinter import ttk, Menu, filedialog, messagebox
+from tkinter import ttk, Menu, messagebox
 from PIL import Image, ImageTk, ImageOps
 import numpy as np
 
 # Import the HistogramGenerator class
 from features.histogram import HistogramGenerator
+from features.open_image import open_image
+from features.save_image import save_image
 
 
 class MainWindow:
@@ -79,7 +81,7 @@ class MainWindow:
         self.tk_img_right = None
         self.current_image = None
         self.original_image = None
-        self.output_image = None  # Add this for consistency
+        self.output_image = None
 
         # Bind event untuk resize window
         self.root.bind("<Configure>", self._on_window_resize)
@@ -140,14 +142,14 @@ class MainWindow:
 
         file_menu.add_command(
             label="Open",
-            command=self.open_image,
+            command=self.open_image_wrapper,
             image=self.icon_open if self.icon_open else None,
             compound="left",
             accelerator="Ctrl+O",
         )
         file_menu.add_command(
             label="Save",
-            command=self.save_image,
+            command=self.save_image_wrapper,
             image=self.icon_save if self.icon_save else None,
             compound="left",
             accelerator="Ctrl+S",
@@ -206,7 +208,78 @@ class MainWindow:
                     menu.add_command(label=cmd_label, command=cmd_func)
             return menu
 
-        colors_menu = create_menu("Colors")
+        # Colors Menu
+        colors_menu = Menu(menubar, tearoff=0, relief="flat", bd=0)
+        colors_menu.config(
+            bg="white",
+            fg="black",
+            activebackground="#0078d4",
+            activeforeground="white",
+        )
+
+        # Submenu RGB
+        rgb_menu = Menu(colors_menu, tearoff=0, relief="flat", bd=0)
+        rgb_menu.config(
+            bg="white", fg="black", activebackground="#0078d4", activeforeground="white"
+        )
+        for color in ["Yellow", "Orange", "Cyan", "Purple", "Grey", "Brown", "Red"]:
+            rgb_menu.add_command(
+                label=color, command=lambda c=color: print(f"RGB -> {c}")
+            )
+        colors_menu.add_cascade(label="RGB", menu=rgb_menu)
+
+        # Submenu RGB to Grayscale
+        grayscale_menu = Menu(colors_menu, tearoff=0, relief="flat", bd=0)
+        grayscale_menu.config(
+            bg="white", fg="black", activebackground="#0078d4", activeforeground="white"
+        )
+        for method in ["Average", "Lightness", "Luminance"]:
+            grayscale_menu.add_command(
+                label=method, command=lambda m=method: print(f"Grayscale -> {m}")
+            )
+        colors_menu.add_cascade(label="RGB to Grayscale", menu=grayscale_menu)
+
+        # Submenu Brightness
+        brightness_menu = Menu(colors_menu, tearoff=0, relief="flat", bd=0)
+        brightness_menu.config(
+            bg="white", fg="black", activebackground="#0078d4", activeforeground="white"
+        )
+        brightness_menu.add_command(
+            label="Contrast", command=lambda: print("Brightness -> Contrast")
+        )
+        colors_menu.add_cascade(label="Brightness", menu=brightness_menu)
+
+        # Brightness - Contrast (langsung item biasa)
+        colors_menu.add_command(
+            label="Brightness - Contrast",
+            command=lambda: print("Brightness - Contrast"),
+        )
+
+        # Invert
+        colors_menu.add_command(label="Invert", command=lambda: print("Invert"))
+
+        # Log Brightness
+        colors_menu.add_command(
+            label="Log Brightness", command=lambda: print("Log Brightness")
+        )
+
+        # Submenu Bit Depth
+        bitdepth_menu = Menu(colors_menu, tearoff=0, relief="flat", bd=0)
+        bitdepth_menu.config(
+            bg="white", fg="black", activebackground="#0078d4", activeforeground="white"
+        )
+        for i in range(1, 8):
+            bitdepth_menu.add_command(
+                label=f"{i} bit", command=lambda b=i: print(f"Bit Depth -> {b} bit")
+            )
+        colors_menu.add_cascade(label="Bit Depth", menu=bitdepth_menu)
+
+        # Gamma Correction
+        colors_menu.add_command(
+            label="Gamma Correction", command=lambda: print("Gamma Correction")
+        )
+
+        # Tambahkan ke menubar
         menubar.add_cascade(label="Colors", menu=colors_menu)
 
         # Menu Tentang sebagai command, bukan cascade
@@ -235,8 +308,8 @@ class MainWindow:
         self.root.config(menu=menubar)
 
         # Bind keyboard shortcuts
-        self.root.bind("<Control-o>", lambda e: self.open_image())
-        self.root.bind("<Control-s>", lambda e: self.save_image())
+        self.root.bind("<Control-o>", lambda e: self.open_image_wrapper())
+        self.root.bind("<Control-s>", lambda e: self.save_image_wrapper())
 
     def _file_exists(self, path):
         import os
@@ -253,29 +326,19 @@ class MainWindow:
             mode=mode, input_image=self.original_image, output_image=self.output_image
         )
 
-    def save_image(self):
-        if self.current_image is None:
-            messagebox.showwarning("Warning", "Tidak ada gambar untuk disimpan!")
-            return
+    def open_image_wrapper(self):
+        """
+        Wrapper untuk fungsi open_image dari features.open_image
+        """
+        # Panggil fungsi open_image dari features dengan passing self sebagai main_window
+        open_image(self)
 
-        file_path = filedialog.asksaveasfilename(
-            defaultextension=".png",
-            filetypes=[
-                ("PNG files", "*.png"),
-                ("JPEG files", "*.jpg"),
-                ("BMP files", "*.bmp"),
-                ("All files", "*.*"),
-            ],
-        )
-        if file_path:
-            try:
-                self.current_image.save(file_path)
-                messagebox.showinfo(
-                    "Info", f"Gambar berhasil disimpan ke:\n{file_path}"
-                )
-                self.status_bar.config(text=f"Saved: {file_path}")
-            except Exception as e:
-                messagebox.showerror("Error", f"Gagal menyimpan gambar:\n{str(e)}")
+    def save_image_wrapper(self):
+        """
+        Wrapper untuk fungsi save_image dari features.save_image
+        """
+        # Panggil fungsi save_image dari features dengan passing self sebagai main_window
+        save_image(self)
 
     def _get_frame_size(self):
         """Mendapatkan ukuran frame yang sebenarnya"""
@@ -327,42 +390,11 @@ class MainWindow:
             if self.tk_img_right:
                 self.root.after(
                     100,
-                    lambda: self._resize_and_display_image(self.current_image, "right"),
+                    lambda: self._resize_and_display_image(
+                        self.output_image if self.output_image else self.current_image,
+                        "right",
+                    ),
                 )
-
-    def open_image(self):
-        file_path = filedialog.askopenfilename(
-            title="Select Image File",
-            filetypes=[
-                ("Image files", "*.jpg *.jpeg *.png *.bmp *.gif *.tiff"),
-                ("JPEG files", "*.jpg *.jpeg"),
-                ("PNG files", "*.png"),
-                ("BMP files", "*.bmp"),
-                ("All files", "*.*"),
-            ],
-        )
-        if file_path:
-            try:
-                img = Image.open(file_path)
-
-                # Simpan gambar asli
-                self.original_image = img.copy()
-                self.current_image = img.copy()
-
-                # Tampilkan gambar di input frame
-                self._resize_and_display_image(self.current_image, "left")
-
-                # Clear output frame (reset ke placeholder)
-                self.output_image = None
-                self.right_label.config(image="", text="Output Image")
-                self.tk_img_right = None
-
-                # Update status
-                img_info = f"{img.size[0]}x{img.size[1]} - {img.mode}"
-                self.status_bar.config(text=f"Opened: {file_path} | Size: {img_info}")
-
-            except Exception as e:
-                messagebox.showerror("Error", f"Gagal membuka gambar:\n{str(e)}")
 
     def set_output_image(self, processed_image):
         """
