@@ -1,12 +1,12 @@
 import tkinter as tk
-from tkinter import ttk, Menu, messagebox
+from tkinter import ttk
 from PIL import Image, ImageTk, ImageOps
 import numpy as np
 
-# Import the HistogramGenerator class
 from features.histogram import HistogramGenerator
 from features.open_image import open_image
 from features.save_image import save_image
+from ui.menu.menu_bar import MenuBar
 
 
 class MainWindow:
@@ -27,8 +27,8 @@ class MainWindow:
         # Initialize HistogramGenerator
         self.histogram_generator = HistogramGenerator(self.root)
 
-        # Menu Bar
-        self._create_menu()
+        # Initialize MenuBar
+        self.menu_bar = MenuBar(self)
 
         # Frame kiri (gambar 1)
         self.left_frame = tk.Frame(self.root, bd=2, relief="groove", bg="#f0f0f0")
@@ -62,19 +62,41 @@ class MainWindow:
         )
         self.right_label.grid(row=0, column=0, sticky="nsew")
 
-        # Status Bar dengan style yang lebih baik
-        status_frame = tk.Frame(self.root, relief="sunken", bd=1)
+        # Status Bar dengan style yang lebih baik dan layout horizontal
+        status_frame = tk.Frame(self.root, relief="sunken", bd=1, bg="#e0e0e0")
         status_frame.grid(row=1, column=0, columnspan=2, sticky="we")
 
+        # Frame untuk status text dan progress bar dalam satu baris
+        content_frame = tk.Frame(status_frame, bg="#e0e0e0")
+        content_frame.pack(fill="x", padx=5, pady=2)
+
         self.status_bar = tk.Label(
-            status_frame,
+            content_frame,
             text="Ready | No image loaded",
             anchor="w",
-            padx=5,
-            pady=2,
             bg="#e0e0e0",
+            fg="black",
         )
-        self.status_bar.pack(fill="x")
+        self.status_bar.pack(side="left", fill="x", expand=True)
+
+        # Progress bar dengan style hijau dan ukuran yang lebih kecil
+        style.configure(
+            "Green.Horizontal.TProgressbar",
+            foreground="green",
+            background="green",
+            lightcolor="lightgreen",
+            darkcolor="darkgreen",
+            bordercolor="gray",
+            focuscolor="green",
+        )
+
+        self.progress = ttk.Progressbar(
+            content_frame,
+            mode="indeterminate",
+            length=200,
+            style="Green.Horizontal.TProgressbar",
+        )
+        # Progress bar tidak ditampilkan secara default
 
         # Simpan referensi gambar
         self.tk_img_left = None
@@ -86,241 +108,19 @@ class MainWindow:
         # Bind event untuk resize window
         self.root.bind("<Configure>", self._on_window_resize)
 
-    def _create_menu(self):
-        menubar = Menu(self.root, relief="flat", borderwidth=0)
+    def show_progress(self, message="Processing..."):
+        """Tampilkan loading bar dengan pesan"""
+        self.status_bar.config(text=message)
+        self.progress.pack(side="right", padx=(10, 0))
+        self.progress.start(10)  # Animasi indeterminate
+        self.root.update_idletasks()
 
-        # Konfigurasi untuk mengurangi bayangan dan blur
-        menubar.config(
-            bg="#f8f8f8",
-            fg="black",
-            activebackground="#e0e0e0",
-            activeforeground="black",
-            relief="flat",
-            bd=0,
-        )
-
-        def load_icon(path, size=(16, 16)):
-            try:
-                img = Image.open(path).convert("RGBA")
-                img = img.resize(size, Image.LANCZOS)
-
-                # Background putih solid
-                bg_img = Image.new("RGBA", size, (255, 255, 255, 255))
-                bg_img.paste(img, (0, 0), img)
-                bg_img = bg_img.convert("RGB")
-
-                return ImageTk.PhotoImage(bg_img)
-            except Exception as e:
-                print(f"Icon loading error: {e}")
-                return None
-
-        # Load icons
-        self.icon_open = (
-            load_icon("icons/open.png") if self._file_exists("icons/open.png") else None
-        )
-        self.icon_save = (
-            load_icon("icons/save.png") if self._file_exists("icons/save.png") else None
-        )
-        self.icon_exit = (
-            load_icon("icons/exit.png") if self._file_exists("icons/exit.png") else None
-        )
-        self.icon_histogram = (
-            load_icon("icons/histogram.png")
-            if self._file_exists("icons/histogram.png")
-            else None
-        )
-
-        # File Menu
-        file_menu = Menu(menubar, tearoff=0, relief="flat", bd=0)
-        file_menu.config(
-            bg="white",
-            fg="black",
-            activebackground="#0078d4",
-            activeforeground="white",
-            selectcolor="#0078d4",
-        )
-
-        file_menu.add_command(
-            label="Open",
-            command=self.open_image_wrapper,
-            image=self.icon_open if self.icon_open else None,
-            compound="left",
-            accelerator="Ctrl+O",
-        )
-        file_menu.add_command(
-            label="Save",
-            command=self.save_image_wrapper,
-            image=self.icon_save if self.icon_save else None,
-            compound="left",
-            accelerator="Ctrl+S",
-        )
-        file_menu.add_separator()
-        file_menu.add_command(
-            label="Exit",
-            command=self.root.quit,
-            image=self.icon_exit if self.icon_exit else None,
-            compound="left",
-            accelerator="Alt+F4",
-        )
-        menubar.add_cascade(label="File", menu=file_menu)
-
-        # View Menu dengan submenu Histogram
-        view_menu = Menu(menubar, tearoff=0, relief="flat", bd=0)
-        view_menu.config(
-            bg="white", fg="black", activebackground="#0078d4", activeforeground="white"
-        )
-
-        # Submenu Histogram - Now using HistogramGenerator
-        histogram_menu = Menu(view_menu, tearoff=0, relief="flat", bd=0)
-        histogram_menu.config(
-            bg="white", fg="black", activebackground="#0078d4", activeforeground="white"
-        )
-
-        histogram_menu.add_command(
-            label="Input", command=lambda: self.show_histogram("input")
-        )
-        histogram_menu.add_command(
-            label="Output", command=lambda: self.show_histogram("output")
-        )
-        histogram_menu.add_command(
-            label="Input dan Output", command=lambda: self.show_histogram("both")
-        )
-
-        view_menu.add_cascade(
-            label="Histogram",
-            menu=histogram_menu,
-            image=self.icon_histogram if self.icon_histogram else None,
-            compound="left",
-        )
-        menubar.add_cascade(label="View", menu=view_menu)
-
-        # Menu lainnya dengan style konsisten
-        def create_menu(label, commands=None):
-            menu = Menu(menubar, tearoff=0, relief="flat", bd=0)
-            menu.config(
-                bg="white",
-                fg="black",
-                activebackground="#0078d4",
-                activeforeground="white",
-            )
-            if commands:
-                for cmd_label, cmd_func in commands:
-                    menu.add_command(label=cmd_label, command=cmd_func)
-            return menu
-
-        # Colors Menu
-        colors_menu = Menu(menubar, tearoff=0, relief="flat", bd=0)
-        colors_menu.config(
-            bg="white",
-            fg="black",
-            activebackground="#0078d4",
-            activeforeground="white",
-        )
-
-        # Submenu RGB
-        rgb_menu = Menu(colors_menu, tearoff=0, relief="flat", bd=0)
-        rgb_menu.config(
-            bg="white", fg="black", activebackground="#0078d4", activeforeground="white"
-        )
-        for color in ["Yellow", "Orange", "Cyan", "Purple", "Grey", "Brown", "Red"]:
-            rgb_menu.add_command(
-                label=color, command=lambda c=color: print(f"RGB -> {c}")
-            )
-        colors_menu.add_cascade(label="RGB", menu=rgb_menu)
-
-        # Submenu RGB to Grayscale
-        grayscale_menu = Menu(colors_menu, tearoff=0, relief="flat", bd=0)
-        grayscale_menu.config(
-            bg="white", fg="black", activebackground="#0078d4", activeforeground="white"
-        )
-        for method in ["Average", "Lightness", "Luminance"]:
-            grayscale_menu.add_command(
-                label=method, command=lambda m=method: print(f"Grayscale -> {m}")
-            )
-        colors_menu.add_cascade(label="RGB to Grayscale", menu=grayscale_menu)
-
-        # Submenu Brightness
-        brightness_menu = Menu(colors_menu, tearoff=0, relief="flat", bd=0)
-        brightness_menu.config(
-            bg="white", fg="black", activebackground="#0078d4", activeforeground="white"
-        )
-        brightness_menu.add_command(
-            label="Contrast", command=lambda: print("Brightness -> Contrast")
-        )
-        colors_menu.add_cascade(label="Brightness", menu=brightness_menu)
-
-        # Brightness - Contrast (langsung item biasa)
-        colors_menu.add_command(
-            label="Brightness - Contrast",
-            command=lambda: print("Brightness - Contrast"),
-        )
-
-        # Invert
-        colors_menu.add_command(label="Invert", command=lambda: print("Invert"))
-
-        # Log Brightness
-        colors_menu.add_command(
-            label="Log Brightness", command=lambda: print("Log Brightness")
-        )
-
-        # Submenu Bit Depth
-        bitdepth_menu = Menu(colors_menu, tearoff=0, relief="flat", bd=0)
-        bitdepth_menu.config(
-            bg="white", fg="black", activebackground="#0078d4", activeforeground="white"
-        )
-        for i in range(1, 8):
-            bitdepth_menu.add_command(
-                label=f"{i} bit", command=lambda b=i: print(f"Bit Depth -> {b} bit")
-            )
-        colors_menu.add_cascade(label="Bit Depth", menu=bitdepth_menu)
-
-        # Gamma Correction
-        colors_menu.add_command(
-            label="Gamma Correction", command=lambda: print("Gamma Correction")
-        )
-
-        # Tambahkan ke menubar
-        menubar.add_cascade(label="Colors", menu=colors_menu)
-
-        # Menu Tentang sebagai command, bukan cascade
-        menubar.add_command(
-            label="Tentang",
-            command=lambda: messagebox.showinfo(
-                "Tentang", "Aplikasi GUI Python\nVersion 1.0"
-            ),
-        )
-
-        processing_menu = create_menu("Image Processing")
-        menubar.add_cascade(label="Image Processing", menu=processing_menu)
-
-        arithmetic_menu = create_menu("Arithmetical Operation")
-        menubar.add_cascade(label="Arithmetical Operation", menu=arithmetic_menu)
-
-        filter_menu = create_menu("Filter")
-        menubar.add_cascade(label="Filter", menu=filter_menu)
-
-        edge_menu = create_menu("Edge Detection")
-        menubar.add_cascade(label="Edge Detection", menu=edge_menu)
-
-        morfologi_menu = create_menu("Morfologi")
-        menubar.add_cascade(label="Morfologi", menu=morfologi_menu)
-
-        self.root.config(menu=menubar)
-
-        # Bind keyboard shortcuts
-        self.root.bind("<Control-o>", lambda e: self.open_image_wrapper())
-        self.root.bind("<Control-s>", lambda e: self.save_image_wrapper())
-
-    def _file_exists(self, path):
-        import os
-
-        return os.path.exists(path)
+    def hide_progress(self):
+        """Sembunyikan loading bar dan reset status"""
+        self.progress.stop()
+        self.progress.pack_forget()
 
     def show_histogram(self, mode):
-        """
-        Tampilkan histogram menggunakan HistogramGenerator
-        Ini menggantikan implementasi histogram yang lama
-        """
         # Delegate ke HistogramGenerator dengan parameter yang sesuai
         self.histogram_generator.show_histogram(
             mode=mode, input_image=self.original_image, output_image=self.output_image
@@ -404,8 +204,9 @@ class MainWindow:
         self.output_image = processed_image.copy()
         self._resize_and_display_image(self.output_image, "right")
 
-        # Update status
-        self.status_bar.config(text="Image processed successfully")
+        # Update status tanpa menampilkan pesan sukses yang berlebihan
+        img_info = f"{processed_image.size[0]}x{processed_image.size[1]} - {processed_image.mode}"
+        self.status_bar.config(text=f"Image processed | Size: {img_info}")
 
     def get_input_image(self):
         """Method untuk mendapatkan gambar input untuk processing"""
