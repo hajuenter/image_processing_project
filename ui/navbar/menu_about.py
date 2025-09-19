@@ -6,6 +6,6 @@ def create_about_menu(parent):
     return {
         "label": "Tentang",
         "command": lambda: messagebox.showinfo(
-            "Tentang", "Aplikasi GUI Python\nVersion 1.0"
+            "Tentang", "Aplikasi GUI Image Processing Python\nVersion 1.0"
         ),
     }
