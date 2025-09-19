@@ -54,51 +54,48 @@ class HistogramGenerator:
         canvas.draw()
         canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        # Frame tombol
-        button_frame = tk.Frame(hist_window, bg="white")
-        button_frame.pack(fill=tk.X, padx=10, pady=5)
-
-        save_btn = ttk.Button(
-            button_frame,
-            text="Save Histogram",
-            command=lambda: self._save_histogram(fig),
-        )
-        save_btn.pack(side=tk.LEFT, padx=(0, 10))
-
-        close_btn = ttk.Button(button_frame, text="Close", command=hist_window.destroy)
-        close_btn.pack(side=tk.RIGHT)
-
         # Center window
         hist_window.transient(self.parent)
         hist_window.grab_set()
         self._center_window(hist_window)
 
     def _create_single_histogram(self, image):
-        """Buat histogram untuk satu gambar dengan subplot vertikal untuk R, G, B"""
-        fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(5, 7))
-
+        """Buat histogram untuk gambar RGB atau Grayscale"""
         if image.mode == "RGB":
+            fig, axes = plt.subplots(3, 1, figsize=(5, 7))
             channels = image.split()
             colors = ["red", "green", "blue"]
-        else:
-            # grayscale → gunakan 3 channel dengan warna berbeda
-            channels = [image, image, image]
-            colors = ["red", "green", "blue"]
+            titles = ["Red Channel", "Green Channel", "Blue Channel"]
 
-        for ax, channel, color in zip((ax1, ax2, ax3), channels, colors):
-            data = np.array(channel).flatten()
-            ax.hist(data, bins=256, color=color, alpha=0.7, edgecolor=color)
+            for ax, channel, color, title in zip(axes, channels, colors, titles):
+                data = np.array(channel).flatten()
+                ax.hist(data, bins=256, color=color, alpha=0.7, edgecolor=color)
+                ax.set_xlim([0, 255])
+                ax.grid(True, linestyle="--", linewidth=0.5, alpha=0.7)
+                ax.set_facecolor("white")
+                ax.set_xticks([])
+                ax.set_yticks([])
+                ax.set_title(title, fontsize=10)
+
+        elif image.mode == "L":  # Grayscale
+            fig, ax = plt.subplots(figsize=(5, 3))
+            data = np.array(image).flatten()
+            ax.hist(data, bins=256, color="black", alpha=0.7, edgecolor="black")
             ax.set_xlim([0, 255])
-
-            # Tambahkan grid kotak-kotak
             ax.grid(True, linestyle="--", linewidth=0.5, alpha=0.7)
             ax.set_facecolor("white")
-
-            # Hilangkan angka sumbu
             ax.set_xticks([])
             ax.set_yticks([])
+            ax.set_title("Grayscale Histogram", fontsize=12)
 
-        plt.subplots_adjust(hspace=0.1)
+        else:
+            # fallback untuk mode lain (RGBA, CMYK, dsb)
+            fig, ax = plt.subplots(figsize=(5, 3))
+            data = np.array(image.convert("L")).flatten()
+            ax.hist(data, bins=256, color="gray", alpha=0.7, edgecolor="black")
+            ax.set_xlim([0, 255])
+            ax.set_title(f"Histogram ({image.mode})", fontsize=12)
+
         plt.tight_layout()
         return fig
 

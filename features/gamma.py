@@ -68,23 +68,23 @@ def adjust_gamma(main_window):
 
         # Tampilkan progress di status bar
         main_window.show_progress("Applying Gamma Correction...")
+        main_window.root.update()
 
         def process():
-            # Gamma correction dengan lookup table
             invGamma = 1.0 / gamma
             table = [((i / 255.0) ** invGamma) * 255 for i in range(256)]
             table = np.array(table).clip(0, 255).astype("uint8")
 
-            img_corrected = input_img.point(table.tolist() * input_img.layers)
+            # perbaikan di sini
+            img_corrected = input_img.point(table.tolist() * len(input_img.getbands()))
 
-            # Update output
             main_window.set_output_image(img_corrected)
-
-            # Sembunyikan progress bar
             main_window.hide_progress()
             popup.destroy()
 
-        main_window.root.after(100, process)
+        # bisa langsung panggil process() (sinkron)
+        # atau tetap pakai after kalau mau non-blocking
+        process()
 
     ttk.Button(btn_frame, text="Apply", command=apply_gamma).pack(
         side="left", expand=True, fill="x", padx=5

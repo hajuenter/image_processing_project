@@ -5,6 +5,8 @@ from features import brightness
 from features.brightness_contrast import adjust_brightness_contrast
 from features.gamma import adjust_gamma
 from features.bit_depth import apply_bit_depth
+from features.invert import apply_invert
+from features.log_brightness import apply_log_brightness
 
 
 def create_colors_menu(parent, main_window):
@@ -54,11 +56,15 @@ def create_colors_menu(parent, main_window):
     )
 
     # Invert
-    colors_menu.add_command(label="Invert", command=lambda: print("Invert"))
+    colors_menu.add_command(
+        label="Invert",
+        command=lambda: apply_invert(main_window),
+    )
 
     # Log Brightness
     colors_menu.add_command(
-        label="Log Brightness", command=lambda: print("Log Brightness")
+        label="Log Brightness",
+        command=lambda: apply_log_brightness(main_window),
     )
 
     # Submenu Bit Depth
