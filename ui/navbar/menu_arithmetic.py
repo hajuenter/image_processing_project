@@ -1,4 +1,5 @@
 from tkinter import Menu
+from features.arithmetic import arithmetic_operation
 
 
 def create_arithmetic_menu(parent, main_window):
@@ -10,7 +11,9 @@ def create_arithmetic_menu(parent, main_window):
         activeforeground="white",
     )
 
-    # sementara placeholder
-    menu.add_command(label="Dummy Arithmetic", command=lambda: print("Arithmetic..."))
+    menu.add_command(
+        label="Arithmetic Operation",
+        command=lambda: arithmetic_operation(main_window),
+    )
 
     return menu

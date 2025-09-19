@@ -10,8 +10,7 @@ def create_edge_menu(parent, main_window):
         activeforeground="white",
     )
 
-    menu.add_command(
-        label="Dummy Edge Detection", command=lambda: print("Edge detection...")
-    )
+    menu.add_command(label="Prewitt", command=lambda: print("Edge detection..."))
+    menu.add_command(label="Sobel", command=lambda: print("Edge detection..."))
 
     return menu
