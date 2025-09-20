@@ -1,4 +1,6 @@
 from tkinter import Menu
+from features.prewitt import apply_prewitt
+from features.sobel import apply_sobel
 
 
 def create_edge_menu(parent, main_window):
@@ -10,7 +12,7 @@ def create_edge_menu(parent, main_window):
         activeforeground="white",
     )
 
-    menu.add_command(label="Prewitt", command=lambda: print("Edge detection..."))
-    menu.add_command(label="Sobel", command=lambda: print("Edge detection..."))
+    menu.add_command(label="Prewitt", command=lambda: apply_prewitt(main_window))
+    menu.add_command(label="Sobel", command=lambda: apply_sobel(main_window))
 
     return menu
