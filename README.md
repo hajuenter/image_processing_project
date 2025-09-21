@@ -26,10 +26,6 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 
 ## ✨ Features
 
-<table width="100%">
-<tr>
-<td width="50%" valign="top">
-
 ### 📂 File Management
 
 - **Open Image**: Multiple formats
@@ -41,8 +37,7 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 - **Real-time Updates**: Live histogram
 - **Channel Analysis**: Individual RGB channels
 
-</td>
-<td width="50%" valign="top">
+---
 
 ### 🎨 Color Processing
 
@@ -56,13 +51,7 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 - **Fuzzy Processing**: Advanced operations
 - **Noise Reduction**: Multiple algorithms
 
-</td>
-</tr>
-</table>
-
-<table width="100%">
-<tr>
-<td width="50%" valign="top">
+---
 
 ### ➕ Arithmetic Operations
 
@@ -77,8 +66,7 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 - **Blur Filters**: Gaussian, Average
 - **Advanced Filters**: Unsharp, Low/High-pass
 
-</td>
-<td width="50%" valign="top">
+---
 
 ### 🔍 Edge Detection
 
@@ -95,11 +83,7 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 
 - **Color Inversion**: Advanced processing
 - **Gamma Correction**: Professional tools
-- **Bit Depth Reduction**: 1-7 bit options
-
-</td>
-</tr>
-</table>
+- **Bit Depth Reduction**: 1–7 bit options
 
 ## 🔧 Prerequisites
 
