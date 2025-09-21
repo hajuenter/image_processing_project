@@ -28,68 +28,75 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 
 <table width="100%">
 <tr>
-<td width="33.33%" valign="top">
-<h4>📂 File Management</h4>
-• <strong>Open Image</strong>: Multiple formats<br>
-• <strong>Save Image</strong>: Export options<br>
+<td width="50%" valign="top">
+
+### 📂 File Management
+
+- **Open Image**: Multiple formats
+- **Save Image**: Export options
+
+### 📊 Image Analysis
+
+- **Histogram Display**: Grayscale & RGB
+- **Real-time Updates**: Live histogram
+- **Channel Analysis**: Individual RGB channels
+
 </td>
-<td width="33.33%" valign="top">
-<h4>📊 Image Analysis</h4>
-• <strong>Histogram Display</strong>: Grayscale & RGB<br>
-• <strong>Real-time Updates</strong>: Live histogram<br>
-• <strong>Channel Analysis</strong>: Individual RGB channels
-</td>
-<td width="33.34%" valign="top">
-<h4>🎨 Color Processing</h4>
-• <strong>RGB Color Filters</strong>: 7+ color options<br>
-• <strong>Color Space Conversion</strong>: Multiple methods<br>
-• <strong>Brightness & Contrast</strong>: Adjustable controls
+<td width="50%" valign="top">
+
+### 🎨 Color Processing
+
+- **RGB Color Filters**: 7+ color options
+- **Color Space Conversion**: Multiple methods
+- **Brightness & Contrast**: Adjustable controls
+
+### 🔧 Image Enhancement
+
+- **Histogram Equalization**: Contrast improvement
+- **Fuzzy Processing**: Advanced operations
+- **Noise Reduction**: Multiple algorithms
+
 </td>
 </tr>
 </table>
 
 <table width="100%">
 <tr>
-<td width="33.33%" valign="top">
-<h4>🔧 Image Enhancement</h4>
-• <strong>Histogram Equalization</strong>: Contrast improvement<br>
-• <strong>Fuzzy Processing</strong>: Advanced operations<br>
-• <strong>Noise Reduction</strong>: Multiple algorithms
-</td>
-<td width="33.33%" valign="top">
-<h4>➕ Arithmetic Operations</h4>
-• <strong>Image Addition</strong>: Blend images<br>
-• <strong>Image Subtraction</strong>: Difference ops<br>
-• <strong>Image Multiplication</strong>: Feature enhancement<br>
-• <strong>Image Division</strong>: Region normalization
-</td>
-<td width="33.34%" valign="top">
-<h4>🧩 Filtering Operations</h4>
-• <strong>Basic Filters</strong>: Identity, Sharpen<br>
-• <strong>Blur Filters</strong>: Gaussian, Average<br>
-• <strong>Advanced Filters</strong>: Unsharp, Low/High-pass
-</td>
-</tr>
-</table>
+<td width="50%" valign="top">
 
-<table width="100%">
-<tr>
-<td width="33.33%" valign="top">
-<h4>🔍 Edge Detection</h4>
-• <strong>Prewitt Operator</strong>: Edge detection<br>
-• <strong>Sobel Operator</strong>: Enhanced filtering
+### ➕ Arithmetic Operations
+
+- **Image Addition**: Blend images
+- **Image Subtraction**: Difference ops
+- **Image Multiplication**: Feature enhancement
+- **Image Division**: Region normalization
+
+### 🧩 Filtering Operations
+
+- **Basic Filters**: Identity, Sharpen
+- **Blur Filters**: Gaussian, Average
+- **Advanced Filters**: Unsharp, Low/High-pass
+
 </td>
-<td width="33.33%" valign="top">
-<h4>🔲 Morphological Operations</h4>
-• <strong>Erosion</strong>: Multiple structuring elements<br>
-• <strong>Dilation</strong>: Various kernel sizes<br>
-• <strong>Opening & Closing</strong>: Complete operations
-</td>
-<td width="33.34%" valign="top">
-<h4>⚙️ Advanced Features</h4>
-• <strong>Color Inversion</strong>: Advanced processing<br>
-• <strong>Gamma Correction</strong>: Professional tools<br>
-• <strong>Bit Depth Reduction</strong>: 1-7 bit options
+<td width="50%" valign="top">
+
+### 🔍 Edge Detection
+
+- **Prewitt Operator**: Edge detection
+- **Sobel Operator**: Enhanced filtering
+
+### 🔲 Morphological Operations
+
+- **Erosion**: Multiple structuring elements
+- **Dilation**: Various kernel sizes
+- **Opening & Closing**: Complete operations
+
+### ⚙️ Advanced Features
+
+- **Color Inversion**: Advanced processing
+- **Gamma Correction**: Professional tools
+- **Bit Depth Reduction**: 1-7 bit options
+
 </td>
 </tr>
 </table>
@@ -103,25 +110,28 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 ## 🚀 Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/hajuenter/image_processing_project.git
    cd PROJECT_UTS
    ```
 
 2. **Create and activate virtual environment**
+
    ```bash
    # Create virtual environment
    python -m venv venv
-   
+
    # Activate virtual environment
    # On Windows:
    venv\Scripts\activate
-   
+
    # On macOS/Linux:
    source venv/bin/activate
    ```
 
 3. **Install dependencies**
+
    ```bash
    pip install -r requirements.txt
    ```
@@ -210,7 +220,7 @@ Aplikasi ini menggunakan arsitektur modular dengan pemisahan yang jelas antara:
 - **`ui/menu/`**: Sistem menu utama
 - **`navbar/`**: Komponen-komponen menu yang spesifik untuk setiap fitur:
   - File operations (`menu_file.py`)
-  - Color processing (`menu_colors.py`) 
+  - Color processing (`menu_colors.py`)
   - Image filters (`menu_filter.py`)
   - Edge detection (`menu_edge.py`)
   - Morphological operations (`menu_morfologi.py`)
@@ -221,8 +231,6 @@ Aplikasi ini menggunakan arsitektur modular dengan pemisahan yang jelas antara:
 - **`features/`**: Core utilities dan helper functions
 - **`icons/`**: Asset gambar dan ikon untuk GUI
 
-
-
 ### Development Guidelines
 
 - Follow PEP 8 style guide
@@ -231,13 +239,11 @@ Aplikasi ini menggunakan arsitektur modular dengan pemisahan yang jelas antara:
 - Update documentation as needed
 - Each menu functionality is separated into its own module for better maintainability
 
-
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 📄 License
 
-**Developer**: [hajuenter](https://github.com/hajuenter)
+**Developer**: [bahrulahmad1945@gmail.com](mailto:bahrulahmad1945@gmail.com)
 
 - GitHub: [@hajuenter](https://github.com/hajuenter)
 - Project Link: [https://github.com/hajuenter/image_processing_project](https://github.com/hajuenter/image_processing_project)
