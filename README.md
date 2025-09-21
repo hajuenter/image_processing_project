@@ -26,12 +26,12 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 
 ## ✨ Features
 
-### 📂 File Management
+**📂 File Management**
 
 - **Open Image**: Multiple formats
 - **Save Image**: Export options
 
-### 📊 Image Analysis
+**📊 Image Analysis**
 
 - **Histogram Display**: Grayscale & RGB
 - **Real-time Updates**: Live histogram
@@ -39,13 +39,13 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 
 ---
 
-### 🎨 Color Processing
+**🎨 Color Processing**
 
 - **RGB Color Filters**: 7+ color options
 - **Color Space Conversion**: Multiple methods
 - **Brightness & Contrast**: Adjustable controls
 
-### 🔧 Image Enhancement
+**🔧 Image Enhancement**
 
 - **Histogram Equalization**: Contrast improvement
 - **Fuzzy Processing**: Advanced operations
@@ -53,14 +53,14 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 
 ---
 
-### ➕ Arithmetic Operations
+**➕ Arithmetic Operations**
 
 - **Image Addition**: Blend images
 - **Image Subtraction**: Difference ops
 - **Image Multiplication**: Feature enhancement
 - **Image Division**: Region normalization
 
-### 🧩 Filtering Operations
+**🧩 Filtering Operations**
 
 - **Basic Filters**: Identity, Sharpen
 - **Blur Filters**: Gaussian, Average
@@ -68,18 +68,18 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 
 ---
 
-### 🔍 Edge Detection
+**🔍 Edge Detection**
 
 - **Prewitt Operator**: Edge detection
 - **Sobel Operator**: Enhanced filtering
 
-### 🔲 Morphological Operations
+**🔲 Morphological Operations**
 
 - **Erosion**: Multiple structuring elements
 - **Dilation**: Various kernel sizes
 - **Opening & Closing**: Complete operations
 
-### ⚙️ Advanced Features
+**⚙️ Advanced Features**
 
 - **Color Inversion**: Advanced processing
 - **Gamma Correction**: Professional tools
