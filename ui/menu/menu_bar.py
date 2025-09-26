@@ -11,6 +11,7 @@ from ui.navbar.menu_arithmetic import create_arithmetic_menu
 from ui.navbar.menu_filter import create_filter_menu
 from ui.navbar.menu_edge import create_edge_menu
 from ui.navbar.menu_morfologi import create_morfologi_menu
+from ui.navbar.menu_segmentation import create_segmentation_menu
 
 
 class MenuBar:
@@ -76,6 +77,10 @@ class MenuBar:
         self.menubar.add_cascade(
             label="Arithmetical Operation",
             menu=create_arithmetic_menu(self.menubar, self.main_window),
+        )
+        self.menubar.add_cascade(
+            label="Segmentation",
+            menu=create_segmentation_menu(self.menubar, self.main_window),
         )
         self.menubar.add_cascade(
             label="Filter", menu=create_filter_menu(self.menubar, self.main_window)
