@@ -60,6 +60,14 @@ A comprehensive Python desktop application built with **Tkinter** that provides 
 - **Image Multiplication**: Feature enhancement
 - **Image Division**: Region normalization
 
+**🔬 Segmentation**
+
+- **Global Thresholding**: Simple binary segmentation
+- **Adaptive Thresholding**: Localized segmentation
+- **K-Means Clustering**: Color-based segmentation
+- **Watershed Algorithm**: Region-based separation
+- **Region Growing**: Pixel connectivity approach
+
 **🧩 Filtering Operations**
 
 - **Basic Filters**: Identity, Sharpen
@@ -153,27 +161,28 @@ python main.py
 
 ```
 PROJECT_UTS/
-├── main.py                 # Main application entry point
-├── main_window.py          # Main GUI window
-├── features/               # Core features and utilities
-├── icons/                  # Application icons and images
-├── ui/                     # User Interface components
-│   └── menu/               # Menu system
-│       └── menu_bar.py     # Main menu bar
-├── navbar/                 # Navigation components
-│   ├── menu_about.py       # About dialog
-│   ├── menu_arithmetic.py  # Arithmetic operations
-│   ├── menu_colors.py      # Color processing
-│   ├── menu_edge.py        # Edge detection
-│   ├── menu_file.py        # File operations
-│   ├── menu_filter.py      # Image filters
-│   ├── menu_morfologi.py   # Morphological operations
-│   ├── menu_processing.py  # Image processing
-│   └── menu_view.py        # View operations
-├── venv/                   # Virtual environment
-├── requirements.txt        # Python dependencies
-├── README.md              # Project documentation
-└── .gitignore             # Git ignore file
+├── main.py                  # Main application entry point
+├── main_window.py           # Main GUI window
+├── features/                # Core features and utilities
+├── icons/                   # Application icons and images
+├── ui/                      # User Interface components
+│   └── menu/                # Menu system
+│       └── menu_bar.py      # Main menu bar
+├── navbar/                  # Navigation components
+│   ├── menu_about.py        # About dialog
+│   ├── menu_arithmetic.py   # Arithmetic operations
+│   ├── menu_colors.py       # Color processing
+│   ├── menu_edge.py         # Edge detection
+│   ├── menu_file.py         # File operations
+│   ├── menu_filter.py       # Image filters
+│   ├── menu_morfologi.py    # Morphological operations
+│   ├── menu_segmentation.py # Segmentation operations
+│   ├── menu_processing.py   # Image processing
+│   └── menu_view.py         # View operations
+├── venv/                    # Virtual environment
+├── requirements.txt         # Python dependencies
+├── README.md                # Project documentation
+└── .gitignore               # Git ignore file
 ```
 
 ## 🤝 Contributing
