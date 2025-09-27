@@ -9,7 +9,7 @@ def apply_watershed(main_window, return_image=False):
     Watershed Segmentation:
     - return_image: jika True -> return PIL.Image tanpa update UI
     """
-    input_img = main_window.get_input_image()
+    input_img = main_window.get_output_image() or main_window.get_input_image()
     if input_img is None:
         if not return_image:
             messagebox.showwarning("No Image", "Please open an image first!")

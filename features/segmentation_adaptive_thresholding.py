@@ -10,7 +10,7 @@ def apply_adaptive_thresholding(main_window, block_size=15, C=10, return_image=F
     - C: nilai dikurangi dari rata-rata blok
     - return_image: jika True -> return hasil image saja (tanpa update UI)
     """
-    input_img = main_window.get_input_image()
+    input_img = main_window.get_output_image() or main_window.get_input_image()
     if input_img is None:
         if not return_image:
             messagebox.showwarning("No Image", "Please open an image first!")

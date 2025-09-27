@@ -8,7 +8,7 @@ def apply_global_thresholding(main_window, threshold=128, return_image=False):
     - threshold: nilai ambang (0-255)
     - return_image: jika True -> return hasil image saja (tanpa update UI)
     """
-    input_img = main_window.get_input_image()
+    input_img = main_window.get_output_image() or main_window.get_input_image()
     if input_img is None:
         if not return_image:  # hanya beri warning kalau dipanggil dari UI
             messagebox.showwarning("No Image", "Please open an image first!")

@@ -10,7 +10,7 @@ def apply_kmeans(main_window, k=3, max_iter=10, return_image=False):
     - max_iter: jumlah iterasi maksimal
     - return_image: jika True -> return hasil image (tanpa update UI)
     """
-    input_img = main_window.get_input_image()
+    input_img = main_window.get_output_image() or main_window.get_input_image()
     if input_img is None:
         if not return_image:
             messagebox.showwarning("No Image", "Please open an image first!")

@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 
 def apply_identity_filter(main_window):
-    input_img = main_window.get_input_image()
+    input_img = main_window.get_output_image() or main_window.get_input_image()
     if input_img is None:
         messagebox.showwarning("No Image", "Please open an image first!")
         main_window.status_bar.config(text="No image loaded")
@@ -11,10 +11,10 @@ def apply_identity_filter(main_window):
 
     # Tampilkan loading bar
     main_window.show_progress("Applying Identity filter...")
-    main_window.root.update()  # paksa UI redraw supaya loading muncul
+    main_window.root.update()
 
-    # Proses filter identity (gambar tidak berubah, hanya copy)
-    img = input_img.copy()
+    # Pastikan gambar dalam mode RGB
+    img = input_img.convert("RGB").copy()
 
     # Simulasi progress supaya konsisten dengan filter lain
     width, height = img.size

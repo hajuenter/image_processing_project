@@ -11,7 +11,7 @@ def apply_region_growing(main_window, seed=None, threshold=15, return_image=Fals
     - threshold: toleransi perbedaan intensitas
     - return_image: jika True -> return hasil image tanpa update UI
     """
-    input_img = main_window.get_input_image()
+    input_img = main_window.get_output_image() or main_window.get_input_image()
     if input_img is None:
         if not return_image:
             messagebox.showwarning("No Image", "Please open an image first!")

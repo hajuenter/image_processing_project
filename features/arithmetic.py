@@ -7,8 +7,18 @@ def arithmetic_operation(main_window):
     img1 = main_window.get_input_image()
     img2 = main_window.get_output_image()
 
-    if img1 is None or img2 is None:
-        messagebox.showwarning("No Image", "Please open input and output images first!")
+    if img1 is None and img2 is None:
+        messagebox.showwarning(
+            "No Image", "Please open both Input and Output images first!"
+        )
+        return
+    elif img1 is None:
+        messagebox.showwarning("No Input Image", "Please open an input image first!")
+        return
+    elif img2 is None:
+        messagebox.showwarning(
+            "No Output Image", "Please generate or open an output image first!"
+        )
         return
 
     # Samakan ukuran gambar biar bisa dioperasikan
