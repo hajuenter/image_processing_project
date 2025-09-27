@@ -1,10 +1,10 @@
 from tkinter import Menu
 
-from features.identity import apply_identity_filter
-from features.edge_detection import apply_edge_filter
-from features.sharpen import apply_sharpen_filter
-from features.gaussian import apply_gaussian_filter
-from features.unsharp_masking import apply_unsharp_filter
+from features.filter_identity import apply_identity_filter
+from features.filter_edge_detection import apply_edge_filter
+from features.filter_sharpen import apply_sharpen_filter
+from features.filter_gaussian import apply_gaussian_filter
+from features.filter_unsharp_masking import apply_unsharp_filter
 from features.filter_average import apply_average_filter
 from features.filter_low_pass import apply_lowpass_filter
 from features.filter_high_pass import apply_highpass_filter
