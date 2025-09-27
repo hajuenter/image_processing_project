@@ -1,6 +1,6 @@
 from tkinter import Menu
-from features.prewitt import apply_prewitt
-from features.sobel import apply_sobel
+from features.edge_prewitt import apply_prewitt
+from features.edge_sobel import apply_sobel
 
 
 def create_edge_menu(parent, main_window):
