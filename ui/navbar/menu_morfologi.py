@@ -1,8 +1,8 @@
 from tkinter import Menu
-from features.erosion import apply_erosion
-from features.dilation import apply_dilation
-from features.opening import apply_opening
-from features.closing import apply_closing
+from features.morfologi_erosion import apply_erosion
+from features.morfologi_dilation import apply_dilation
+from features.morfologi_opening import apply_opening
+from features.morfologi_closing import apply_closing
 
 
 def create_morfologi_menu(parent, main_window):
