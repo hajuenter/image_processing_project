@@ -3,7 +3,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk, ImageOps
 import numpy as np
 
-from features.histogram import HistogramGenerator
+from features.view_histogram import HistogramGenerator
 from features.open_image import open_image
 from features.save_image import save_image
 from ui.menu.menu_bar import MenuBar
