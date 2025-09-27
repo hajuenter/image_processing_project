@@ -5,6 +5,7 @@ from features.view_rotate import apply_rotate
 from features.view_translate import apply_translate
 from features.view_zoom import apply_zoom
 from features.view_crop import apply_crop
+from features.view_remove_backgound import apply_remove_background
 
 
 def create_view_menu(parent, main_window):
@@ -60,4 +61,7 @@ def create_view_menu(parent, main_window):
     zoom_menu.add_command(label="Out", command=lambda: apply_zoom(main_window, "out"))
     view_menu.add_cascade(label="Zoom", menu=zoom_menu)
     view_menu.add_command(label="Crop", command=lambda: apply_crop(main_window))
+    view_menu.add_command(
+        label="Remove Background", command=lambda: apply_remove_background(main_window)
+    )
     return view_menu
