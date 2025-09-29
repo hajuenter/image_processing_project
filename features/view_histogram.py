@@ -34,8 +34,6 @@ class HistogramGenerator:
             if input_image is None or output_image is None:
                 messagebox.showwarning("Warning", "Input/Output image not available!")
                 return
-            self._create_histogram_window("Input & Output", (input_image, output_image))
-            # Buka 2 window terpisah
             self._create_histogram_window("Input", input_image)
             self._create_histogram_window("Output", output_image)
 
