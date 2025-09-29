@@ -5,7 +5,8 @@ import numpy as np
 
 def adjust_gamma(main_window):
     """Tampilkan popup untuk Gamma Correction"""
-    input_img = main_window.get_output_image() or main_window.get_input_image()
+    # input_img = main_window.get_output_image() or main_window.get_input_image()
+    input_img = main_window.get_input_image()
     if input_img is None:
         messagebox.showwarning("No Image", "Please open an image first!")
         main_window.status_bar.config(text="No image loaded")

@@ -8,7 +8,8 @@ def adjust_brightness_contrast(main_window):
     Membuka jendela popup untuk atur Brightness & Contrast
     """
     # --- Cek apakah ada gambar input dulu ---
-    input_img = main_window.get_output_image() or main_window.get_input_image()
+    # input_img = main_window.get_output_image() or main_window.get_input_image()
+    input_img = main_window.get_input_image()
     if input_img is None:
         messagebox.showwarning("No Image", "Please open an image first!")
         main_window.status_bar.config(text="No image loaded")

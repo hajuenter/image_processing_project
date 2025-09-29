@@ -18,8 +18,8 @@ def apply_zoom(main_window, mode="in"):
         main_window.set_output_image(main_window.original_image.copy())
         main_window.status_bar.config(text="Image reset to original")
         return
-
-    input_img = main_window.get_output_image() or main_window.get_input_image()
+    input_img = main_window.get_input_image()
+    # input_img = main_window.get_output_image() or main_window.get_input_image()
     main_window.show_progress(f"Zooming {mode}...")
     main_window.root.update()
 

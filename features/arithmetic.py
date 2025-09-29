@@ -90,6 +90,40 @@ def arithmetic_operation(main_window):
         width=12,
         command=lambda: show_result(divide_arrays(arr1, arr2)),
     ).grid(row=0, column=3, padx=5)
+    # Tombol operasi logika
+    Button(
+        button_frame,
+        text="AND",
+        width=12,
+        command=lambda: show_result(
+            np.bitwise_and(arr1.astype(np.uint8), arr2.astype(np.uint8))
+        ),
+    ).grid(row=1, column=0, padx=5)
+
+    Button(
+        button_frame,
+        text="OR",
+        width=12,
+        command=lambda: show_result(
+            np.bitwise_or(arr1.astype(np.uint8), arr2.astype(np.uint8))
+        ),
+    ).grid(row=1, column=1, padx=5)
+
+    Button(
+        button_frame,
+        text="XOR",
+        width=12,
+        command=lambda: show_result(
+            np.bitwise_xor(arr1.astype(np.uint8), arr2.astype(np.uint8))
+        ),
+    ).grid(row=1, column=2, padx=5)
+
+    Button(
+        button_frame,
+        text="NOT (img1)",
+        width=12,
+        command=lambda: show_result(np.bitwise_not(arr1.astype(np.uint8))),
+    ).grid(row=1, column=3, padx=5)
 
     # Simpan reference biar tidak ke-garbage collect
     win.img1_tk = img1_tk

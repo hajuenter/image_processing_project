@@ -13,7 +13,8 @@ def view_all_segmentations(main_window):
     dengan progress bar hijau selama proses berjalan.
     Semua gambar ditampilkan horizontal dengan ukuran seragam dan center.
     """
-    input_img = main_window.get_output_image() or main_window.get_input_image()
+    # input_img = main_window.get_output_image() or main_window.get_input_image()
+    input_img = main_window.get_input_image()
     if input_img is None:
         messagebox.showwarning("No Image", "Please open an image first!")
         return
